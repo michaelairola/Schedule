@@ -1,0 +1,62 @@
+table {
+  margin: auto;
+  border-collapse: collapse;
+}
+
+.calendar {
+  margin-top: 20px;
+}
+
+.calendarLabel {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  color: white;
+  background: #2875C7;
+  border: solid 2px #C0C0C0;
+  text-transform: capitalize;
+  font-size: 3em;
+}
+
+.selected {
+  background: #2875C7;
+  color: white;
+}
+
+.notMonth {
+  color: grey;
+}
+
+tr td {
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+  white-space: nowrap;
+  
+  width: 140px;
+  
+  border: solid 1px #C0C0C0;
+}
+
+tr .day {
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #2875C7;
+}
+
+tr .date {
+  height: 110px;
+}
+
+tr .events {
+  list-style: inside;
+  font-size: small;
+  margin: 0px;
+  padding: 2px;
+}
+
+tr .events li .list {
+  position: relative;
+  left: -10%;
+}
