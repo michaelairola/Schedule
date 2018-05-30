@@ -4,6 +4,13 @@ import Calendar from './Calendar';
 import createDataTree from './createDataTree';
 
 class Schedule extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      newCalendarData: {}
+    }
+  }
+    
   render() {
     const dataTree = createDataTree(this.props.calendarData),
           day = this.props.date.getDate(),

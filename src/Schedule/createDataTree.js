@@ -10,33 +10,28 @@ const createDataTree = (data) => {
       if(!rruleDict[id]){rruleDict[id] = new RRuleSet()};
       if(event.recurrence){
         for(var j in event.recurrence){
-          let rrule = event.recurrence[j];
-          if(rrule.startsWith("RRULE")){
-            if(!rrule.includes("DTSTART")){
-              let dtstart = dateStrToDate(event.start.dateTime || event.start.date);
-              rrule = rrulestr(rrule, {dtstart: dtstart});
-            } else {
-              rrule = rrulestr(rrule);
+          let rruleStr = event.recurrence[j];
+          if(rruleStr.includes("RULE")){
+            let dtstart = dateStrToDate(event.start.dateTime || event.start.date),
+                rrule = rrulestr(rruleStr, {dtstart: dtstart});
+            if(rruleStr.startsWith("RRULE")){
+              rruleDict[id].rrule(rrule);
+            }else if (rruleStr.startsWith("EXRULE")){
+              rruleDict[id].exrule(rrule);
             }
-            rruleDict[id].rrule(rrule);
-          } else if(rrule.startsWith("EXRULE")){
-            rrule = rrulestr(rrule);
-            rruleDict[id].rdate(rrule);
-          } else if(rrule.startsWith("RDATE")){
-            let date = dateStrToDate(rrule);
-            rruleDict[id].rdate(date);
-          } else if(rrule.startsWith("EXDATE")){
-            let date = dateStrToDate(rrule);
-            rruleDict[id].exdate(date);
-          }else {
-            console.log("createRRuleDict error");
-          }
+          } else if(rruleStr.includes("DATE")){
+            let date = dateStrToDate(rruleStr);
+            if(rruleStr.startsWith("RDATE")){
+              rruleDict[id].rdate(date);
+            }else if(rruleStr.startsWith("EXDATE")){
+              rruleDict[id].exdate(date);
+            }
+          } else {console.log("createRRuleDict error")}
         }
       } else if(event.recurringEventId){
-        const ogDate = dateStrToDate(event.originalStartTime.dateTime || event.originalStartTime.date);
+        const ogDate = dateStrToDate(event.originalStartTime.dateTime || event.originalStartTime.date);        
         rruleDict[id].exdate(ogDate);
       }else {
-        rruleDict[id] = new RRuleSet();
         const date = dateStrToDate(event.start.dateTime || event.start.date);
         rruleDict[id].rdate(date);
       }
@@ -44,11 +39,12 @@ const createDataTree = (data) => {
     return rruleDict;
   }
   
-  const dateStrToDate = (start) => {
-    if(start){
-      let date = start.match(/(\d{4})-(\d{2})-(\d{2})/),
-          time = start.match(/(\d{2}):(\d{2}):(\d{2})/);
-          
+  const dateStrToDate = (dateStr) => {
+    if(dateStr){
+      let date = dateStr.match(/(\d{4})-(\d{2})-(\d{2})/) 
+              || dateStr.match(/(\d{4})(\d{2})(\d{2})T/),
+          time = dateStr.match(/(\d{2}):(\d{2}):(\d{2})/) 
+              || dateStr.match(/T(\d{2})(\d{2})(\d{2})/);
       const year = date[1], month = date[2]-1, day = date[3];
       let hour = 0, minutes = 0, seconds = 0;
       if(time){
@@ -78,15 +74,19 @@ const createDataTree = (data) => {
   const renderData = (data) => {
     let newData = {};
     const rruleDict = createRRuleDict(data);
-    let dates = [];
+    let dates;
     for(var i in data){
+      dates = [];
       const event = data[i];
       if(!event.recurringEventId){
-        dates = rruleDict[event.id].all();
+        let firstDate = new Date(), lastDate = new Date();
+        firstDate.setYear(firstDate.getFullYear() - 10);
+        lastDate.setYear(lastDate.getFullYear() + 10);
+        dates = rruleDict[event.id].between(firstDate, lastDate);
       }
       else if(event.status !== 'cancelled'){
         dates = [ dateStrToDate(event.start.dateTime || event.start.date) ];
-      }
+      }      
       addDatesToData(event, newData, dates);
     }
     return newData;

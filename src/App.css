@@ -1,9 +1,25 @@
 .App {
   width: fit-content;
-  margin: auto;
+  margin: 3% auto;
 }
 
-main {
+form {
+  display: flex;
+  align-items: center;
   width: fit-content;
-  margin: auto;
+  margin: 0 auto;
+}
+
+.calendarId{
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  font-size: 14pt;
+}
+
+.idInput {
+  margin: 0 25px;
+  font-size: 14pt;
+  text-align: center;
+  width: 500px;
 }

@@ -26,6 +26,7 @@ class Day extends Component {
     data = this.props.calendarData,
     selectedDay = this.props.selected.getDate(),
     selectedMonth = this.props.selected.getMonth(),
+    selectedYear = this.props.selected.getFullYear(),
     year = this.props.year_month_day[0],
     month = this.props.year_month_day[1],
     day = this.props.year_month_day[2];
@@ -33,21 +34,23 @@ class Day extends Component {
     // to determine if the day has an event or not
     if(data && data[year] 
             && data[year][month]
-            && data[year][month][day]){
+            && data[year][month][day]) {
       const events = data[year][month][day];
       for (var i in events){
         const event = events[i],
               name = event.summary;
               // date = event.start.dateTime || event.start.date;
         
-        eventName.push(<li key={name}>
+        eventName.push(<li key={event.id}>
                         <span className="list">{name}</span>
                       </li>
                       )
       }
     };
     // to determine if the day is selected
-    if(day === selectedDay && month === selectedMonth){
+    if( day === selectedDay &&
+      month === selectedMonth &&
+       year === selectedYear) {
       isSelected = " selected "
     }else {isSelected = ""};    
     // to determine if the day is in the current month
