@@ -1,89 +1,89 @@
 .digit {
   position: relative;
-  margin: 0px 5px;
+  margin: 0px 10px;
   float: right;
-  width: 18px;
-  height: 35px;
+  width: 36px;
+  height: 70px;
 }
 
 .digit .a {
   position: absolute;
-  left: 1px;
+  left: 2px;
   height: 0;
-  width: 10px;
-  border-top: 3px solid black;
-  border-left: 3px solid transparent;
-  border-right: 3px solid transparent;
+  width: 20px;
+  border-top: 6px solid black;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
 }
 .digit .b {
   position: absolute;
-  left: 15px;
-  top: 1px;
-  height: 10px;
+  left: 30px;
+  top: 2px;
+  height: 20px;
   width: 0;
-  border-right: 3px solid black;
-  border-top: 3px solid transparent;
-  border-bottom: 3px solid transparent;
+  border-right: 6px solid black;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
 }
 .digit .c {
   position: absolute;
-  left: 15px;
-  top: 18px;
-  height: 10px;
+  left: 30px;
+  top: 36px;
+  height: 20px;
   width: 0;
-  border-right: 3px solid black;
-  border-top: 3px solid transparent;
-  border-bottom: 3px solid transparent;
+  border-right: 6px solid black;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
 }
 .digit .d {
   position: absolute;
-  top: 32px;
-  left: 1px;
+  top: 64px;
+  left: 2px;
   height: 0;
-  width: 10px;
-  border-bottom: 3px solid black;
-  border-left: 3px solid transparent;
-  border-right: 3px solid transparent;
+  width: 20px;
+  border-bottom: 6px solid black;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
 }
 .digit .e {
   position: absolute;
   left: 0;
-  top: 18px;
-  height: 10px;
+  top: 36px;
+  height: 20px;
   width: 0;
-  border-left: 3px solid black;
-  border-top: 3px solid transparent;
-  border-bottom: 3px solid transparent;
+  border-left: 6px solid black;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
 }
 .digit .f {
   position: absolute;
   left: 0;
-  top: 1px;
-  height: 10px;
+  top: 2px;
+  height: 20px;
   width: 0;
-  border-left: 3px solid black;
-  border-top: 3px solid transparent;
-  border-bottom: 3px solid transparent;
+  border-left: 6px solid black;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
 }
 
 .digit .g {
   position: absolute;
-  top: 16px;
-  left: 1px;
+  top: 32px;
+  left: 2px;
 }
 
 .digit .g .bottom {
   height: 0;
-  width: 13px;
-  border-top: 1px solid black;
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
+  width: 26px;
+  border-top: 2px solid black;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
 }
 
 .digit .g .top {
   height: 0;
-  width: 13px;
-  border-bottom: 1px solid black;
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
+  width: 26px;
+  border-bottom: 3px solid black;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
 }

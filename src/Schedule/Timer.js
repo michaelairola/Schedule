@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Digits from './Digits/Digits';
 import dateStrToDate from './dateStrToDate';
+import './Timer.css';
 
 class Timer extends Component {
   constructor() {
@@ -45,11 +46,14 @@ class Timer extends Component {
     else {
       date.setDate(date.getDate() - 1)
     }
-    let nextEventDate = dateStrToDate(nextDay[0].start.dateTime || nextDay[0].start.date);
+    let nextEventDate = new Date();
     for(var i in nextDay){
       let newEvent = nextDay[i],
           newDate = dateStrToDate(newEvent.start.dateTime || newEvent.start.date);
-      if(newDate < nextEventDate){
+      newDate.setFullYear(date.getFullYear());
+      newDate.setMonth(date.getMonth());
+      newDate.setDate(date.getDate());
+      if(newDate > nextEventDate){
         nextEventDate = newDate;
         nextEvent = newEvent;
       }
@@ -57,29 +61,69 @@ class Timer extends Component {
     const nextHour = nextEventDate.getHours(),
           nextMinute= nextEventDate.getMinutes(),
           nextSecond= nextEventDate.getSeconds();
-    date.setHours(nextHour);date.setMinutes(nextMinute);date.setSeconds(nextSecond);
+    date.setHours(nextHour);
+    date.setMinutes(nextMinute);
+    date.setSeconds(nextSecond);
     return {date: date, nextEvent: nextEvent};
   }
   
-  render() {
-    let nextEvent = this.nextEventInfo(this.state.currentDate),
-        totalSeconds, hours, minutes, seconds;
-    if(nextEvent){
-      totalSeconds = Math.floor((nextEvent.date - this.state.currentDate)/1000);
-      hours = Math.floor(totalSeconds/3600);
-      minutes = Math.floor(totalSeconds/60) % 60 ;
-      seconds = totalSeconds % 60;
+  renderEvent(eventInfo){
+    let summary, date, time, location, description;
+    if(eventInfo){
+      summary = eventInfo.nextEvent.summary;
+      date = eventInfo.date.toLocaleDateString();
+      time = eventInfo.date.toLocaleTimeString();
+      location = eventInfo.nextEvent.location;
+      description = eventInfo.nextEvent.description;
     }
     return (
-      <div className="timer-box">
-        <span>Time till next event:</span>
-        <div className="timer">
-          <Digits num={seconds}/> 
-          <span className="colon">&#58;</span>
-          <Digits num={minutes}/>
-          <span className="colon">&#58;</span>
-          <Digits num={hours}/>
+      <div className="event">
+        <div className="eventBox">
+          <div className="eventSummary">
+            <b>Event:</b> {summary}
+          </div>
+          <div className="eventDate">
+            <b>Date:</b> {date}
+          </div>
+          <div className="eventTime">
+            <b>Time:</b> {time}
+          </div>
+          <div className="eventLocation">
+            <b>Location:</b> {location}
+          </div>
         </div>
+        <div className="eventBox">
+          <b>Description:</b> {description}
+        </div>
+      </div>
+    );
+  }
+  
+  render() {
+    let nextEventInfo = this.nextEventInfo(this.state.currentDate),
+        totalSeconds, hours, minutes, seconds, event;
+    if(nextEventInfo){
+      totalSeconds = Math.floor((nextEventInfo.date - this.state.currentDate)/1000);
+      hours = Math.floor(totalSeconds/3600);
+      minutes = Math.floor(totalSeconds/60) % 60;
+      seconds = totalSeconds % 60;
+      event = nextEventInfo.nextEvent;
+    }
+    return (
+      <div className="nextEvent">
+        <div className="timerBox">
+          <div className="timerLabel">
+            <b>Time till next event</b>
+          </div>
+          <div className="timer">
+            <Digits num={hours}/> 
+            <span className="colon">&#58;</span>
+            <Digits num={minutes}/>
+            <span className="colon">&#58;</span>
+            <Digits num={seconds}/>
+          </div>
+        </div>
+        <div>{this.renderEvent(nextEventInfo)}</div>
       </div>
     );
   }

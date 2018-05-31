@@ -8,7 +8,7 @@ class App extends Component {
     this.state = {
       // options for calendarId for testing are:
       // testCalendar, publicTestCalendar, chsVolleyballCalendar
-      calendarId: this.props.publicTestCalendar,
+      calendarId: this.props.testCalendar,
       calendarData: {}
     }
     this.handleChange = this.handleChange.bind(this);
