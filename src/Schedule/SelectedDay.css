@@ -1,0 +1,8 @@
+
+.selectedDay {
+  width: 300px;
+  /* margin: auto; */
+  border-radius: 4%;
+  background: grey;
+}
+
