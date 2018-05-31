@@ -39,10 +39,11 @@ class Day extends Component {
       const events = data[year][month][day];
       for (var i in events){
         const event = events[i],
-              name = event.summary,
-              time = dateStrToDate(event.start.dateTime || event.start.date)
-                      .toLocaleTimeString().replace(/:00| /g,"");
-        // console.log(time);
+              name = event.summary;
+        let time;
+        if(event.start.dateTime){
+          time = dateStrToDate(event.start.dateTime).toLocaleTimeString().replace(/:00| /g,"");
+        }
         eventsList.push(<li key={event.id}>
                         <span className="list">{time} {name}</span>
                       </li>
