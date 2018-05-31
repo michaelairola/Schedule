@@ -3,30 +3,6 @@ table {
   border-collapse: collapse;
 }
 
-.calendar {
-  margin-top: 20px;
-}
-
-.calendarLabel {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 10px;
-  color: white;
-  background: #2875C7;
-  border: solid 2px #C0C0C0;
-  text-transform: capitalize;
-  font-size: 3em;
-}
-
-.selected {
-  background: #2875C7;
-  color: white;
-}
-
-.notMonth {
-  color: grey;
-}
-
 tr td {
   display: inline-block;
   vertical-align: top;
@@ -58,5 +34,57 @@ tr .events {
 
 tr .events li .list {
   position: relative;
-  left: -10%;
+  left: -7%;
 }
+
+.calendar {
+  margin-top: 20px;
+}
+
+.calendarLabel {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  color: white;
+  background: #2875C7;
+  border: solid 2px #C0C0C0;
+  text-transform: capitalize;
+  font-size: 3em;
+}
+
+.selected {
+  background: #2875C7;
+  color: white;
+}
+
+.notMonth {
+  color: grey;
+}
+
+.timer {
+  /* margin: auto; */
+  height: 40px;
+  width: 250px;
+}
+
+.timer-box{
+  display: flex;
+}
+
+.colon {
+  font-size: 24pt;
+  margin: 0 5px;
+  position: relative;
+  float: right;
+}
+
+
+
+
+
+
+
+
+
+
+

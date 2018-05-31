@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import dateStrToDate from './dateStrToDate';
 import './Calendar.css';
 
 class DayNames extends Component {
@@ -19,7 +20,7 @@ class DayNames extends Component {
 
 class Day extends Component {
   render() {
-    let eventName = [],
+    let eventsList = [],
     isSelected = "date ",
     notMonth = "",
     className = "",
@@ -38,15 +39,17 @@ class Day extends Component {
       const events = data[year][month][day];
       for (var i in events){
         const event = events[i],
-              name = event.summary;
-              // date = event.start.dateTime || event.start.date;
-        
-        eventName.push(<li key={event.id}>
-                        <span className="list">{name}</span>
+              name = event.summary,
+              time = dateStrToDate(event.start.dateTime || event.start.date)
+                      .toLocaleTimeString().replace(/:00| /g,"");
+        // console.log(time);
+        eventsList.push(<li key={event.id}>
+                        <span className="list">{time} {name}</span>
                       </li>
                       )
       }
     };
+    
     // to determine if the day is selected
     if( day === selectedDay &&
       month === selectedMonth &&
@@ -61,7 +64,7 @@ class Day extends Component {
     return (
       <td className={className} onClick={this.props.onClick}>
         <span className="date">{day}</span>
-        <ul className="events">{eventName}</ul>
+        <ul className="events">{eventsList}</ul>
       </td>
     );
   }
