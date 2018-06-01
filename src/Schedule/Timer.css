@@ -1,8 +1,7 @@
 .nextEvent{
   display: flex;
   margin: auto;
-  height: 120px;
-  /* border: solid green; */
+  height: 130px;
 }
 
 .box {
