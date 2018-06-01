@@ -10,7 +10,7 @@ class Timer extends Component {
       currentDate: new Date()
     }
   }
-  
+
   componentDidMount(){
     this.timerID = setInterval(
       () => this.tick(),
@@ -25,26 +25,26 @@ class Timer extends Component {
       currentDate: new Date()
     });
   }
-  
+
   nextEventInfo() {
     // this determines if calendarData is empty, dont ask me
     // why it needs to be so complicated
     if(Object.keys(this.props.calendarData).length===0){
       return null
     }
-    
+
     let date = new Date(), count = 0,
         nextDay = null, nextEvent = null;
     const data = this.props.calendarData;
     while (count < 31 && !nextDay){
-      const year  = date.getFullYear(), 
+      const year  = date.getFullYear(),
             month = date.getMonth(),
             day   = date.getDate();
-      if(data && data[year] 
+      if(data && data[year]
               && data[year][month]
               && data[year][month][day]) {
         nextDay = data[year][month][day];
-      }      
+      }
       date.setDate(day + 1);
       count ++;
     }
@@ -72,12 +72,12 @@ class Timer extends Component {
     date.setSeconds(nextSecond);
     return {date: date, nextEvent: nextEvent};
   }
-  
+
   renderTimer(eventInfo){
     let timer=[];
     if(eventInfo){
       if(eventInfo==="No Events This Month"){
-        timer.push(<p key="noUpcomingEvents">
+        timer.push(<p className="noEvents" key="noUpcomingEvents">
           Looks like the next event is at least a month in the future.
           Try picking up another hobby.
         </p>);
@@ -86,25 +86,33 @@ class Timer extends Component {
         hours = Math.floor(totalSeconds/3600),
         minutes = Math.floor(totalSeconds/60) % 60,
         seconds = totalSeconds % 60;
-        
-        timer.push(<Digits num={hours}/>);
-        timer.push(<span className="colon">&#58;</span>);
-        timer.push(<Digits num={minutes}/>);
-        timer.push(<span className="colon">&#58;</span>);
-        timer.push(<Digits num={seconds}/>);
+
+        timer.push(<Digits key="hours" num={hours}/>);
+        timer.push(<span key="hour-minute-colon" className="colon">&#58;</span>);
+        timer.push(<Digits key="minutes" num={minutes}/>);
+        timer.push(<span key="minute-second-colon" className="colon">&#58;</span>);
+        timer.push(<Digits key="seconds" num={seconds}/>);
       }
     }
-    return timer;
+    return (
+      <div className="timerBox box">
+        <div className="eventLabel">
+          <b>Time till next event</b>
+        </div>
+        <div className="timer">
+          {timer}
+        </div>
+      </div>
+    );
   }
-  
+
   renderEvent(eventInfo){
     let summary, date, time, location, description,
-    descriptionDiv = [], generalInfo = [];
+    descriptionDiv, generalInfo = [];
     if(eventInfo){
       if(eventInfo==="No Events This Month"){
         time="to get a new hobby";
-        description=
-        "please just consider getting a new thing to do";
+        description="please just consider getting a new thing to do";
       }else{
         summary = eventInfo.nextEvent.summary;
         date = eventInfo.date.toLocaleDateString();
@@ -113,35 +121,32 @@ class Timer extends Component {
         description = eventInfo.nextEvent.description;
       }
     }
-    if(summary){generalInfo.push(<div className="eventSummary"><b>Name:</b> {summary}</div>)};
-    if(date){generalInfo.push(<div className="eventdate"><b>Date:</b> {date}</div>)};
-    if(time){generalInfo.push(<div className="eventtime"><b>Time:</b> {time}</div>)};
-    if(location){generalInfo.push(<div className="eventlocation"><b>Location:</b> {location}</div>)};
-    if(description){descriptionDiv.push(<div className="eventBox"><b>Description:</b> {description}</div>)};    
-    
-    return (
-      <div className="event">
-        <div className="eventBox">
-          {generalInfo}
+    if(summary){generalInfo.push(<div key="eventSummary" className="eventSummary"><b>Name:</b> {summary}</div>)};
+    if(date){generalInfo.push(<div key="eventDate" className="eventDate"><b>Date:</b> {date}</div>)};
+    if(time){generalInfo.push(<div key="eventTime" className="eventTime"><b>Time:</b> {time}</div>)};
+    if(location){generalInfo.push(<div key="eventLocation" className="eventlocation"><b>Location:</b> {location}</div>)};
+    if(description){
+      descriptionDiv= (
+        <div className="eventInfo">
+          <div key="description" className="description"><b>Description:</b> {description}</div>
         </div>
-        {descriptionDiv}
+      )};
+    return (
+      <div className="eventBox box">
+          <div className="eventInfo">
+            {generalInfo}
+          </div>
+          {descriptionDiv}
       </div>
     );
   }
-  
+
   render() {
     let nextEventInfo = this.nextEventInfo(this.state.currentDate);
     return (
       <div className="nextEvent">
-        <div className="timerBox">
-          <div className="timerLabel">
-            <b>Time till next event</b>
-          </div>
-          <div className="timer">
-            {this.renderTimer(nextEventInfo)}
-          </div>
-        </div>
-        <div>{this.renderEvent(nextEventInfo)}</div>
+          {this.renderTimer(nextEventInfo)}
+          {this.renderEvent(nextEventInfo)}
       </div>
     );
   }

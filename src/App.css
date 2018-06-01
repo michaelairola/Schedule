@@ -1,13 +1,18 @@
 .App {
   width: fit-content;
-  margin: 10% auto;
+  margin: 5% auto;
+}
+
+h1 {
+  width: fit-content;
+  margin: auto;
 }
 
 form {
   display: flex;
   align-items: center;
   width: fit-content;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 .schedule {

@@ -11,6 +11,12 @@ class Schedule extends Component {
     this.state={
       selected: new Date()
     }
+    
+    this.changeSelected = this.changeSelected.bind(this);
+  }
+    
+  changeSelected([year, month, day]) {
+    this.setState({selected: new Date(year, month, day)});
   }
   
   render() {
@@ -20,8 +26,10 @@ class Schedule extends Component {
         <Timer calendarData={dataTree}/>
         <div className="calendarBox">
           <Calendar selected={this.state.selected}
-                    calendarData={dataTree}/>
-          <SelectedDay selected={this.state.selected}/>
+                    calendarData={dataTree}
+                    changeSelected={([year,month,day]) => this.changeSelected([year,month,day])}/>
+          <SelectedDay selected={this.state.selected}
+                       calendarData={dataTree}/>
         </div>
       </div>
     );

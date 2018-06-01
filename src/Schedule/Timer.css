@@ -1,36 +1,60 @@
 .nextEvent{
   display: flex;
-  justify-content: space-around;
   margin: auto;
-  width: 940px;
-  height: 200px;
+  height: 120px;
+  /* border: solid green; */
 }
 
-.timerBox{
+.box {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: fit-content;
-  padding: 0 5%;
+  height: 100%;
+  min-width: 40%;
   border-radius: 4%;
+  border: solid grey;
   background: grey;
 }
 
-.timerBox p {
-  margin-top: 0;
+.box:hover{border: solid red}
+
+.timerBox {
+  width: fit-content;
+}
+
+.eventBox{
+  overflow: hidden;
+  margin-left: 1%;
+  max-width: 450px;
+}
+
+.eventBox:hover {
+  overflow: visible;
+  min-height: fit-content;
+  z-index: 0;
+}
+
+.noEvents {
+  margin: auto;
   font-size: 20pt;
   width: 400px;
   text-align: center;
 }
 
-.timerLabel {
-  font-size: 40pt;
-  height: fit-content;
-  margin: auto 0;
+.eventLabel {
+  margin: auto;
+  width: fit-content;
+  text-align: center;
+  font-size: 25pt;
+}
+
+.eventInfo{
+  margin: auto;
+  width: 70%;
+  font-size: 15pt;
 }
 
 .timer {
-  display: flex;  
+  display: flex;
   margin: auto;
   width: fit-content;
 }
@@ -39,20 +63,4 @@
   font-size: 45pt;
   position: relative;
   float: right;
-}
-
-.event {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 300px;
-  border-radius: 4%;
-  background: grey;
-}
-
-.eventBox {
-  /* border: solid red; */
-  margin: auto;
-  margin-left: 30px;
-  height: fit-content;
 }

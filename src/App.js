@@ -8,58 +8,58 @@ class App extends Component {
     this.state = {
       // options for calendarId for testing are:
       // testCalendar, publicTestCalendar, chsVolleyballCalendar
-      calendarId: this.props.chsVolleyballCalendar,
+      calendarId: this.props.publicTestCalendar,
       calendarData: {}
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  
+
   handleChange(event) {
    this.setState({calendarId: event.target.value});
  }
-  
+
   handleSubmit(event) {
     this.fetchCalendar(this.state.calendarId);
     event.preventDefault();
   }
-  
+
   createURL(id) {
     const preURL = "https://www.googleapis.com/calendar/v3/calendars/",
           postURL = "/events?key=AIzaSyAhZKs9jI8I6Fy1vnhA0yQ0kD-_5_De6ww&maxResults=2500";
     return preURL + id + postURL;
   }
-  
+
   fetchCalendar(id){
     const url = this.createURL(id);
     fetch(url)
     .then(response => response.json())
-    .then(json => 
+    .then(json =>
       this.setState({calendarData: json.items})
     ).catch(err => {
       console.log(err);
     });
   }
-  
+
   componentDidMount() {
     this.fetchCalendar(this.state.calendarId);
   }
-  
+
   render() {
     return (
       <div className="App">
+        <h1>Replacement Google Calendar Test Page</h1>
         <form className="form" onSubmit={this.handleSubmit}>
           <label className="calendarId">
             Calendar Id:
             <input type="text"
                    className="idInput"
-                   value={this.state.calendarId} 
+                   value={this.state.calendarId}
                    onChange={this.handleChange} />
           </label>
           <input type="submit" value="Submit" />
         </form>
-        <Schedule calendarData={this.state.calendarData}
-                  date={new Date()}/>
+        <Schedule calendarData={this.state.calendarData}/>
       </div>
     );
   }

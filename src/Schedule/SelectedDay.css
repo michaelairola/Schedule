@@ -1,8 +1,31 @@
-
 .selectedDay {
   width: 300px;
-  /* margin: auto; */
+  height: 671px;
   border-radius: 4%;
+  border: solid grey;
   background: grey;
 }
 
+.selectedDay:hover {
+  border: solid red;
+}
+
+.selectedDayDate {
+  width: fit-content;
+  margin: 10% auto;
+  font-size: 20pt;
+}
+
+.selectedDayEvents {
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+}
+
+.selectedDayNoEvents{
+  font-size: 20pt;
+}
+
+.event {
+  margin: 10%;
+}

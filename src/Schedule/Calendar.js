@@ -21,7 +21,7 @@ class DayNames extends Component {
 class Day extends Component {
   render() {
     let eventsList = [],
-    isSelected = "date ",
+    isSelected = "date",
     notMonth = "",
     className = "",
     data = this.props.calendarData,
@@ -31,9 +31,9 @@ class Day extends Component {
     year = this.props.year_month_day[0],
     month = this.props.year_month_day[1],
     day = this.props.year_month_day[2];
-    
+
     // to determine if the day has an event or not
-    if(data && data[year] 
+    if(data && data[year]
             && data[year][month]
             && data[year][month][day]) {
       const events = data[year][month][day];
@@ -50,22 +50,24 @@ class Day extends Component {
                       )
       }
     };
-    
+
     // to determine if the day is selected
     if( day === selectedDay &&
       month === selectedMonth &&
        year === selectedYear) {
-      isSelected = " selected "
-    }else {isSelected = ""};    
+      isSelected = "selected"}
+    // }else {isSelected = "date"};
     // to determine if the day is in the current month
     if(month!==this.props.currentMonth){
-      notMonth = " notMonth"
+      notMonth = "notMonth"
     };
-    className = "date" + isSelected + notMonth
+    className = notMonth +" "+ isSelected
     return (
-      <td className={className} onClick={this.props.onClick}>
-        <span className="date">{day}</span>
-        <ul className="events">{eventsList}</ul>
+      <td className="dateBox" onClick={this.props.onClick}>
+        <div className={className}>
+          <span className="date">{day}</span>
+          <ul className="events">{eventsList}</ul>
+        </div>
       </td>
     );
   }
@@ -75,20 +77,20 @@ class Week extends Component {
   render() {
     let count = 7,
       days = [];
-      
+
     while(count > 0){
       const day = this.props.date.getDate(),
             month = this.props.date.getMonth(),
             year = this.props.date.getFullYear(),
             year_month_day = [year,month,day];
-      
+
       days.push(<Day key={year_month_day}
                      year_month_day={year_month_day}
                      currentMonth={this.props.currentMonth}
                      selected={this.props.selected}
                      calendarData={this.props.calendarData}
                      onClick={() => this.props.onClick(year_month_day)}>
-                </Day>);  
+                </Day>);
       this.props.date.setDate(day + 1);
       count --;
     }
@@ -102,10 +104,12 @@ class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: this.props.selected,
-      currentYear: this.props.selected.getFullYear(), 
+      currentYear: this.props.selected.getFullYear(),
       currentMonth: this.props.selected.getMonth(),
     }
+
+    this.previous = this.previous.bind(this);
+    this.next = this.next.bind(this);
   }
 
   previous() {
@@ -124,17 +128,13 @@ class Calendar extends Component {
     this.setState({currentYear: year, currentMonth: month});
   }
 
-  select([year, month, day]) {
-    this.setState({selected: new Date(year, month, day)});
-  }
-
   render() {
     return (
       <div className="calendar">
         <div className="calendarLabel">
-          <i className="previous" onClick={this.previous.bind(this)}>&larr;</i>
+          <i className="previous" onClick={this.previous}>&larr;</i>
           {this.renderMonthLabel()}
-          <i className="next" onClick={this.next.bind(this)}>&rarr;</i>
+          <i className="next" onClick={this.next}>&rarr;</i>
         </div>
         <table>
           <tbody>
@@ -151,17 +151,17 @@ class Calendar extends Component {
           month = this.state.currentMonth;
     let weeks = [],
       firstDateOfMonth = new Date(year, month, 1),
-      lastDayOfMonth = new Date(year, month+1, 0).getDate(),      
+      lastDayOfMonth = new Date(year, month+1, 0).getDate(),
       firstDayOfWeek = firstDateOfMonth.getDate() - firstDateOfMonth.getDay();
-      
+
     while (firstDayOfWeek <= lastDayOfMonth) {
       weeks.push(
-        <Week key={firstDayOfWeek} 
+        <Week key={firstDayOfWeek}
               date={new Date(year, month, firstDayOfWeek)}
               currentMonth={this.state.currentMonth}
               calendarData={this.props.calendarData}
-              onClick={(year, month, day) => this.select(year, month, day)} 
-              selected={this.state.selected}/>
+              onClick={(year, month, day) => this.props.changeSelected(year, month, day)}
+              selected={this.props.selected}/>
             );
       firstDayOfWeek += 7;
     }

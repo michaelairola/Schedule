@@ -1,5 +1,6 @@
 .calendar {
   width: 940px;
+  height: 671px;
   margin: auto;
   margin-right: 10px;
 }
@@ -15,15 +16,6 @@
   font-size: 3em;
 }
 
-.selected {
-  background: #2875C7;
-  color: white;
-}
-
-.notMonth {
-  color: grey;
-}
-
 table {
   margin: auto;
   border-collapse: collapse;
@@ -34,7 +26,7 @@ tr td {
   vertical-align: top;
   overflow: hidden;
   white-space: nowrap;
-  
+
   width: 130px;
   border: solid 1px #C0C0C0;
 }
@@ -46,8 +38,18 @@ tr .day {
   color: #2875C7;
 }
 
-tr .date {
+tr .dateBox {
   height: 110px;
+}
+
+.notMonth {
+  color: grey;
+}
+
+.selected {
+  height: 110px;
+  background: #2875C7;
+  color: white;
 }
 
 tr .events {
@@ -60,4 +62,5 @@ tr .events {
 tr .events li .list {
   position: relative;
   left: -7%;
+  border-radius: 10%;
 }
