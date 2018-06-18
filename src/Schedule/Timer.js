@@ -26,7 +26,7 @@ class Timer extends Component {
     });
   }
 
-  nextEventInfo() {
+  nextEventInfo = function() {
     // this determines if calendarData is empty, dont ask me
     // why it needs to be so complicated
     if(Object.keys(this.props.calendarData).length===0){
@@ -34,7 +34,8 @@ class Timer extends Component {
     }
 
     let date = new Date(), count = 0,
-        nextDay = null, nextEvent = null;
+        nextDay = null, nextEvent = null,
+        fullDayEvent;
     const data = this.props.calendarData;
     while (count < 31 && !nextDay){
       const year  = date.getFullYear(),
@@ -59,10 +60,19 @@ class Timer extends Component {
       newDate.setFullYear(date.getFullYear());
       newDate.setMonth(date.getMonth());
       newDate.setDate(date.getDate());
+      if(newDate.getHours()   === 0
+      && newDate.getMinutes() === 0
+      && newDate.getSeconds() === 0){
+        fullDayEvent = newEvent;
+      }
       if(newDate > nextEventDate){
         nextEventDate = newDate;
         nextEvent = newEvent;
       }
+    }
+    if(!nextEvent){
+      nextEvent = fullDayEvent;
+      fullDayEvent = true;
     }
     const nextHour = nextEventDate.getHours(),
           nextMinute= nextEventDate.getMinutes(),
@@ -70,7 +80,7 @@ class Timer extends Component {
     date.setHours(nextHour);
     date.setMinutes(nextMinute);
     date.setSeconds(nextSecond);
-    return {date: date, nextEvent: nextEvent};
+    return {date: date, nextEvent: nextEvent, fullDayEvent: fullDayEvent};
   }
 
   renderTimer(eventInfo){
@@ -80,6 +90,11 @@ class Timer extends Component {
         timer.push(<p className="noEvents" key="noUpcomingEvents">
           Looks like the next event is at least a month in the future.
           Try picking up another hobby.
+        </p>);
+      }else if(eventInfo.fullDayEvent){
+
+        timer.push(<p className="fullDayEvent" key="fullDayEvent">
+          All Day Event Today!
         </p>);
       }else {
         let totalSeconds = Math.floor((eventInfo.date - this.state.currentDate)/1000),
